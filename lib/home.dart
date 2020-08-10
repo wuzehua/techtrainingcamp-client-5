@@ -1,16 +1,17 @@
+import 'package:clock_challenge/count_down_page.dart';
 import 'package:flutter/material.dart';
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+class HomePage extends StatefulWidget {
+  HomePage({Key key, this.title}) : super(key: key);
 
 
   final String title;
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _HomePageState createState() => _HomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
@@ -28,14 +29,18 @@ class _MyHomePageState extends State<MyHomePage> {
               color: Colors.blue,
               highlightColor: Colors.blueAccent,
               disabledColor: Colors.blueGrey,
-              splashColor: Colors.white,
               colorBrightness: Brightness.dark,
-              child: Text('这是一个按钮'),
+              splashColor: Colors.white24,
+              child: Text('计时器'),
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(5)
               ),
               onPressed: () {
-
+                Navigator.push(context, MaterialPageRoute(
+                  builder: (context) {
+                    return CountDownPage();
+                  }
+                ));
               },
             )
           ],
