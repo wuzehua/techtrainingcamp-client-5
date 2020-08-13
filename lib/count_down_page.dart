@@ -23,26 +23,32 @@ class _CountDownPageState extends State<CountDownPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('计时器',
-          style: TextStyle(
-            color: Colors.black87,
-            fontWeight: FontWeight.bold
-          ),
-        ),
-        elevation: 0.0,
-        backgroundColor: Colors.transparent,
-        centerTitle: true,
-        leading: IconButton(
-          icon: Icon(Icons.close,
-          color: Colors.black87,),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-      ),
+      appBar: _appBar(title: '计时器'),
+
     );
 
+  }
+
+
+  AppBar _appBar({Key key, String title = ''}) {
+    return AppBar(
+      title: Text(title,
+        style: TextStyle(
+            color: Colors.black87,
+            fontWeight: FontWeight.bold
+        ),
+      ),
+      elevation: 0.0,
+      backgroundColor: Colors.transparent,
+      centerTitle: true,
+      leading: IconButton(
+        icon: Icon(Icons.close,
+          color: Colors.black87,),
+        onPressed: () {
+          Navigator.pop(context);
+        },
+      ),
+    );
   }
 
 }
