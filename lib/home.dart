@@ -1,3 +1,4 @@
+import 'package:clock_challenge/alarm_page.dart';
 import 'package:clock_challenge/count_down_page.dart';
 import 'package:flutter/material.dart';
 
@@ -31,7 +32,7 @@ class _HomePageState extends State<HomePage> {
               disabledColor: Colors.blueGrey,
               colorBrightness: Brightness.dark,
               splashColor: Colors.white24,
-              child: Text('计时器'),
+              child: Text('定时器'),
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(5)
               ),
@@ -39,6 +40,16 @@ class _HomePageState extends State<HomePage> {
                 Navigator.push(context, MaterialPageRoute(
                   builder: (context) {
                     return CountDownPage();
+                  }
+                ));
+              },
+            ),
+            RaisedButton(
+              child: Text('闹钟'),
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(
+                  builder: (context) {
+                    return AlarmPage();
                   }
                 ));
               },
