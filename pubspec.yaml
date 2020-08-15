@@ -29,6 +29,12 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.3
 
+  #计时器页面用到的TimePicker控件
+#  flutter_cupertino_date_picker: ^1.0.26+2
+  #目前官方版本存在问题
+  flutter_cupertino_date_picker:
+    git: https://github.com/daveleenew/flutter-cupertino-date-picker.git
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
