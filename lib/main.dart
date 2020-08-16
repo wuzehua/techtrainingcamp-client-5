@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'home.dart';
+import 'package:clock_challenge/pages/home_page.dart';
 
 void main() {
   runApp(MyApp());

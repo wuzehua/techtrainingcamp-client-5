@@ -35,6 +35,9 @@ dependencies:
   flutter_cupertino_date_picker:
     git: https://github.com/daveleenew/flutter-cupertino-date-picker.git
 
+  #网络请求
+  dio: ^3.0.10
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
