@@ -11,9 +11,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return MaterialApp(
-        home: HomePage(
-          title: 'Clock',
-          ),
+        home: HomePage(),
         );
   }
 }

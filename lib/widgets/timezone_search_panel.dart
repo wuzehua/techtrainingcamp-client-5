@@ -26,10 +26,23 @@ class _TimezoneSearchState extends State<TimezoneSearchPanel> {
           Row(
             children: [
               Expanded(
-                child: TextField(
-                  onChanged: (value) {
-                    _searchLocation = value;
-                  },
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 8, right: 8),
+                  child: TextField(
+                    decoration: InputDecoration(
+                      contentPadding: EdgeInsets.all(10),
+                      fillColor: Colors.black12,
+                      filled: true,
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide.none,
+                        borderRadius: BorderRadius.circular(15)
+                      )
+
+                    ),
+                    onChanged: (value) {
+                      _searchLocation = value;
+                    },
+                  ),
                 ),
               ),
               IconButton(
@@ -50,7 +63,8 @@ class _TimezoneSearchState extends State<TimezoneSearchPanel> {
                   if (_response != null && _response.location != null) {
                     return LocationListItem(_response.location[index],
                       onPressed: (){
-
+                        Navigator.pop(context,
+                            _response.location[index].utcOffset);
                       },
                     );
                   }
