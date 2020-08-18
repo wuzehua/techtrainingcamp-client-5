@@ -27,10 +27,10 @@ class _TimezoneSearchState extends State<TimezoneSearchPanel> {
             children: [
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.only(left: 8, right: 8),
+                  padding: const EdgeInsets.only(left: 8, right: 8, bottom: 8),
                   child: TextField(
                     decoration: InputDecoration(
-                      contentPadding: EdgeInsets.all(10),
+                      contentPadding: EdgeInsets.only(left: 10, right: 10),
                       fillColor: Colors.black12,
                       filled: true,
                       border: OutlineInputBorder(
@@ -39,20 +39,21 @@ class _TimezoneSearchState extends State<TimezoneSearchPanel> {
                       )
 
                     ),
+                    textInputAction: TextInputAction.search,
                     onChanged: (value) {
                       _searchLocation = value;
                     },
+
+                    onSubmitted:(value) async{
+                      _searchLocations();
+                    },
+
                   ),
                 ),
               ),
               IconButton(
                 icon: Icon(Icons.search),
-                onPressed: () async {
-                  LocationResponse res = await HttpService.getService().getLocations(_searchLocation);
-                  setState(() {
-                    _response = res;
-                  });
-                },
+                onPressed: _searchLocations,
               ),
             ],
           ),
@@ -83,6 +84,13 @@ class _TimezoneSearchState extends State<TimezoneSearchPanel> {
     }
 
     return _response.location.length;
+  }
+
+  void _searchLocations() async {
+    LocationResponse res = await HttpService.getService().getLocations(_searchLocation);
+    setState(() {
+      _response = res;
+    });
   }
 
 }

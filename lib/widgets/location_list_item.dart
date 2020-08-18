@@ -25,9 +25,24 @@ class LocationListItem extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(location.name),
-                    Text('${location.country} ${location.adm1} ${location.adm2}'),
-                    Text('${location.lat} ${location.lon}')
+                    Text(location.name,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                      ),
+                    ),
+                    Text('${location.country} ${location.adm1} ${location.adm2}',
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Colors.black26
+                      ),
+                    ),
+                    Text('${location.lat} ${location.lon}',
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Colors.black26
+                      ),
+                    )
                   ],
                 ),
               ),

@@ -24,20 +24,30 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            ClockPanel(_utcOffset),
+            Padding(
+              padding: const EdgeInsets.only(top: 20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  IconButton(
+                    icon: Icon(Icons.access_time),
+                    onPressed: _openCountDownPage,
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.alarm),
+                    onPressed: _openAlarmPage,
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.title),
+                    onPressed: _openTimezonePage,
+                  )
+                ],
+              ),
+            ),
+            Expanded(
+                child: ClockPanel(_utcOffset)
+            ),
             Text(_utcOffset),
-            RaisedButton(
-              child: Text('定时器'),
-              onPressed: _openCountDownPage,
-            ),
-            RaisedButton(
-              child: Text('闹钟'),
-              onPressed: _openAlarmPage
-            ),
-            RaisedButton(
-              child: Text('时区选择'),
-              onPressed: _openTimezonePage,
-            )
           ],
         ),
       ),
