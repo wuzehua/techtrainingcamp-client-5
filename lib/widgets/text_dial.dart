@@ -1,3 +1,4 @@
+import 'package:clock_challenge/painter/text_dial_painter.dart';
 import 'package:clock_challenge/widgets/dial.dart';
 import 'package:flutter/material.dart';
 
@@ -11,7 +12,10 @@ class TextDial extends Dial {
       return Text('无时间');
     }
     return Center(
-      child: Text('${time.hour}:${time.minute}:${time.second}'),
+      child: CustomPaint(
+        size: Size(double.infinity, double.infinity),
+        painter: TextDialPainter(time),
+      ),
     );
   }
 

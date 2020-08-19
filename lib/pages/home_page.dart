@@ -18,32 +18,43 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+
+    ThemeData themeData = Theme.of(context);
+
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        centerTitle: true,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            IconButton(
+              icon: Icon(Icons.access_time,
+                color: themeData.accentColor,
+              ),
+              onPressed: _openCountDownPage,
+            ),
+            IconButton(
+              icon: Icon(Icons.alarm,
+                color: themeData.accentColor,
+              ),
+              onPressed: _openAlarmPage,
+            ),
+            IconButton(
+              icon: Icon(Icons.title,
+                color: themeData.accentColor,
+              ),
+              onPressed: _openTimezonePage,
+            )
+          ],
+        ),
+      ),
       body: Container(
         alignment: Alignment.center,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 20),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  IconButton(
-                    icon: Icon(Icons.access_time),
-                    onPressed: _openCountDownPage,
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.alarm),
-                    onPressed: _openAlarmPage,
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.title),
-                    onPressed: _openTimezonePage,
-                  )
-                ],
-              ),
-            ),
             Expanded(
                 child: ClockPanel(_utcOffset)
             ),

@@ -44,6 +44,8 @@ class _CountDownPanelState extends State<CountDownPanel> {
 
   @override
   Widget build(BuildContext context) {
+    ThemeData themeData = Theme.of(context);
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -52,7 +54,7 @@ class _CountDownPanelState extends State<CountDownPanel> {
             time,
             style: TextStyle(
                 fontSize: 30,
-                color: Colors.black54,
+                color: themeData.accentColor,
                 fontWeight: FontWeight.bold),
           ),
           onPressed: () {
@@ -92,6 +94,7 @@ class _CountDownPanelState extends State<CountDownPanel> {
 
     DatePicker.showDatePicker(context,
         initialDateTime: DateTime.parse('1900-01-01 00:00:00'),
+
         locale: DateTimePickerLocale.zh_cn,
         pickerMode: DateTimePickerMode.time,
         onConfirm: (dateTime, selectIndex) {

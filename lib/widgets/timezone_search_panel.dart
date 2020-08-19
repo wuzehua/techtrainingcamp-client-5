@@ -20,6 +20,9 @@ class _TimezoneSearchState extends State<TimezoneSearchPanel> {
 
   @override
   Widget build(BuildContext context) {
+
+    ThemeData themeData = Theme.of(context);
+
     return Center(
       child: Column(
         children: [
@@ -31,7 +34,8 @@ class _TimezoneSearchState extends State<TimezoneSearchPanel> {
                   child: TextField(
                     decoration: InputDecoration(
                       contentPadding: EdgeInsets.only(left: 10, right: 10),
-                      fillColor: Colors.black12,
+                      fillColor: themeData.brightness == Brightness.dark ?
+                      Colors.white24 : Colors.black26,
                       filled: true,
                       border: OutlineInputBorder(
                         borderSide: BorderSide.none,

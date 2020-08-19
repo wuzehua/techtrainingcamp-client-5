@@ -7,7 +7,8 @@ class PageAppBar extends AppBar {
     title: Text(
       title,
       style:
-      TextStyle(color: Colors.black87, fontWeight: FontWeight.bold),
+      TextStyle(color: Theme.of(context).accentColor,
+          fontWeight: FontWeight.bold),
     ),
     elevation: 0.0,
     backgroundColor: Colors.transparent,
@@ -15,7 +16,7 @@ class PageAppBar extends AppBar {
     leading: IconButton(
       icon: Icon(
         Icons.close,
-        color: Colors.black87,
+        color: Theme.of(context).accentColor,
       ),
       onPressed: () {
         Navigator.pop(context);

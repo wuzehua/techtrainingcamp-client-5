@@ -14,6 +14,9 @@ class LocationListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    ThemeData themeData = Theme.of(context);
+
     return SizedBox(
       width: double.infinity,
       child: Padding(
@@ -34,13 +37,13 @@ class LocationListItem extends StatelessWidget {
                     Text('${location.country} ${location.adm1} ${location.adm2}',
                       style: TextStyle(
                         fontSize: 14,
-                        color: Colors.black26
+                        color: themeData.hintColor
                       ),
                     ),
                     Text('${location.lat} ${location.lon}',
                       style: TextStyle(
                         fontSize: 14,
-                        color: Colors.black26
+                        color: themeData.hintColor
                       ),
                     )
                   ],

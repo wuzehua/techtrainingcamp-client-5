@@ -11,7 +11,14 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return MaterialApp(
-        home: HomePage(),
-        );
+      home: HomePage(),
+      theme: ThemeData.light(),
+      darkTheme: ThemeData(
+        brightness: Brightness.dark,
+        backgroundColor: Colors.black,
+        scaffoldBackgroundColor: Colors.black,
+        accentColor: Colors.white70,
+      ),
+    );
   }
 }
