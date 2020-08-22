@@ -38,6 +38,9 @@ dependencies:
   #网络请求
   dio: ^3.0.10
 
+  #传感器
+  sensors: '>=0.4.2+4 <2.0.0'
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
