@@ -1,7 +1,7 @@
 import 'package:clock_challenge/pages/alarm_page.dart';
 import 'package:clock_challenge/pages/count_down_page.dart';
 import 'package:clock_challenge/pages/timezone_page.dart';
-import 'package:clock_challenge/widgets/clock_panel.dart';
+import 'package:clock_challenge/widgets/ring_clock_panel.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -56,9 +56,8 @@ class _HomePageState extends State<HomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Expanded(
-                child: ClockPanel(_utcOffset)
+                child: RingClockPanel(_utcOffset)
             ),
-            Text(_utcOffset),
           ],
         ),
       ),

@@ -34,14 +34,10 @@ class _TimezoneSearchState extends State<TimezoneSearchPanel> {
                   child: TextField(
                     decoration: InputDecoration(
                       contentPadding: EdgeInsets.only(left: 10, right: 10),
-                      fillColor: themeData.brightness == Brightness.dark ?
-                      Colors.white24 : Colors.black26,
+                      fillColor: Colors.transparent,
                       filled: true,
-                      border: OutlineInputBorder(
-                        borderSide: BorderSide.none,
-                        borderRadius: BorderRadius.circular(15)
-                      )
-
+                      hintText: '搜索地点',
+                      border: InputBorder.none
                     ),
                     textInputAction: TextInputAction.search,
                     onChanged: (value) {
