@@ -3,10 +3,8 @@ import 'dart:math';
 import 'package:clock_challenge/model/ring_state.dart';
 import 'package:clock_challenge/painter/ring_painter.dart';
 import 'package:clock_challenge/utils/datetime_utils.dart';
-import 'package:clock_challenge/widgets/text_dial.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:sensors/sensors.dart';
 
 class RingClockPanel extends StatefulWidget {
 
@@ -27,8 +25,6 @@ class _RingClockPanelState extends State<RingClockPanel> {
   DateTime _time;
   RingState _ringState;
   bool _useAmPm = false;
-  double _rotateX = 0.0;
-  double _rotateY = 0.0;
 
   double _width = 0;
   double _height = 0;

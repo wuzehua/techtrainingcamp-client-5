@@ -8,7 +8,7 @@ class HttpServiceForWeather {
   static HttpServiceForWeather _service;
 
   static final String _locationApiURL =
-      'https://restapi.amap.com/v3/weather/weatherInfo?parameters';
+      'https://restapi.amap.com/v3/weather/weatherInfo?';
   static final String _apiKey = '54a000b75a238ca990ca9cad31c86493';
 
   Dio _dio;

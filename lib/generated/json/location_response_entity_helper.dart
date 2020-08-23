@@ -1,6 +1,6 @@
 import 'package:clock_challenge/model/location_response_entity.dart';
 
-locationResponseEntityFromJson(LocationResponse data, Map<String, dynamic> json) {
+locationResponseFromJson(LocationResponse data, Map<String, dynamic> json) {
 	if (json['status'] != null) {
 		data.status = json['status']?.toString();
 	}
@@ -16,7 +16,7 @@ locationResponseEntityFromJson(LocationResponse data, Map<String, dynamic> json)
 	return data;
 }
 
-Map<String, dynamic> locationResponseEntityToJson(LocationResponse entity) {
+Map<String, dynamic> locationResponseToJson(LocationResponse entity) {
 	final Map<String, dynamic> data = new Map<String, dynamic>();
 	data['status'] = entity.status;
 	if (entity.location != null) {
@@ -28,7 +28,7 @@ Map<String, dynamic> locationResponseEntityToJson(LocationResponse entity) {
 	return data;
 }
 
-locationResponseLocationFromJson(Location data, Map<String, dynamic> json) {
+locationFromJson(Location data, Map<String, dynamic> json) {
 	if (json['name'] != null) {
 		data.name = json['name']?.toString();
 	}
@@ -71,7 +71,7 @@ locationResponseLocationFromJson(Location data, Map<String, dynamic> json) {
 	return data;
 }
 
-Map<String, dynamic> locationResponseLocationToJson(Location entity) {
+Map<String, dynamic> locationToJson(Location entity) {
 	final Map<String, dynamic> data = new Map<String, dynamic>();
 	data['name'] = entity.name;
 	data['id'] = entity.id;
