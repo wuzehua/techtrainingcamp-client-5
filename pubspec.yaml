@@ -41,6 +41,9 @@ dependencies:
   #传感器
   sensors: '>=0.4.2+4 <2.0.0'
 
+  #震动反馈
+  flutter_vibrate: ^1.0.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

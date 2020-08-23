@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:clock_challenge/pages/home_page.dart';
+import 'package:flutter/services.dart';
 
 void main() {
   runApp(MyApp());
@@ -12,7 +13,10 @@ class MyApp extends StatelessWidget {
 
     return MaterialApp(
       home: HomePage(),
-      theme: ThemeData.light(),
+      theme: ThemeData(
+        brightness: Brightness.light,
+        accentColor: Colors.black87,
+      ),
       darkTheme: ThemeData(
         brightness: Brightness.dark,
         backgroundColor: Colors.black,

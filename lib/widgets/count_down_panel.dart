@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_cupertino_date_picker/flutter_cupertino_date_picker.dart';
+import 'package:flutter_vibrate/flutter_vibrate.dart';
 
 class CountDownPanel extends StatefulWidget {
 
@@ -24,6 +25,12 @@ class _CountDownPanelState extends State<CountDownPanel> {
   bool _isCountingDown = false;
   bool _isPaused = false;
   bool _isFinished = false;
+
+  final Iterable<Duration> _pauses = [
+    const Duration(milliseconds: 500),
+    const Duration(milliseconds: 500),
+    const Duration(milliseconds: 500),
+  ];
 
   String get time {
     int hour = _totalSeconds ~/ 3600;
@@ -157,6 +164,7 @@ class _CountDownPanelState extends State<CountDownPanel> {
 
     if (_totalSeconds <= 0) {
       _isFinished = true;
+      Vibrate.vibrateWithPauses(_pauses);
       timer.cancel();
     }
   }
