@@ -3,6 +3,7 @@ import 'package:clock_challenge/pages/count_down_page.dart';
 import 'package:clock_challenge/pages/timezone_page.dart';
 import 'package:clock_challenge/widgets/ring_clock_panel.dart';
 import 'package:flutter/material.dart';
+import 'package:clock_challenge/pages/analog_clock_page.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
@@ -29,6 +30,12 @@ class _HomePageState extends State<HomePage> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            IconButton(
+              icon: Icon(Icons.add_alarm,
+                color: themeData.accentColor,
+              ),
+              onPressed: _openAnalogClockPage,
+            ),
             IconButton(
               icon: Icon(Icons.access_time,
                 color: themeData.accentColor,
@@ -77,6 +84,14 @@ class _HomePageState extends State<HomePage> {
         builder: (context) {
         return AlarmPage();
       })
+    );
+  }
+
+  void _openAnalogClockPage() {
+    Navigator.push(context, MaterialPageRoute(
+        builder: (context) {
+          return AnalogClockPage();
+        })
     );
   }
 
