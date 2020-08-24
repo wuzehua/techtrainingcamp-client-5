@@ -14,7 +14,7 @@ class AnalogClockBgPainter extends CustomPainter{
   @override
   void paint(Canvas canvas, Size size) {
     Gradient gradient = RadialGradient(
-      radius: 0.4,
+      radius: 0.6,
       colors: [
         Colors.blue,
         Colors.black,
