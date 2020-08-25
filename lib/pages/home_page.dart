@@ -1,6 +1,8 @@
+import 'package:clock_challenge/model/clock_state.dart';
 import 'package:clock_challenge/pages/alarm_page.dart';
 import 'package:clock_challenge/pages/count_down_page.dart';
 import 'package:clock_challenge/pages/timezone_page.dart';
+import 'package:clock_challenge/widgets/analog_clock.dart';
 import 'package:clock_challenge/widgets/ring_clock_panel.dart';
 import 'package:flutter/material.dart';
 import 'package:clock_challenge/pages/analog_clock_page.dart';
@@ -15,7 +17,15 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
 
-  String _utcOffset = '+08:00';
+  ClockState _clockState;
+  int _panelIndex = 0;
+  List<Widget> _clockPanels;
+  
+  _HomePageState(): super() {
+    _clockState = ClockState();
+    _clockState.utcOffset = '+08:00';
+    _clockPanels = [RingClockPanel(_clockState), AnalogClock(_clockState)];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,12 +40,6 @@ class _HomePageState extends State<HomePage> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            IconButton(
-              icon: Icon(Icons.add_alarm,
-                color: themeData.accentColor,
-              ),
-              onPressed: _openAnalogClockPage,
-            ),
             IconButton(
               icon: Icon(Icons.access_time,
                 color: themeData.accentColor,
@@ -57,8 +61,17 @@ class _HomePageState extends State<HomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Expanded(
-                child: RingClockPanel(_utcOffset)
+                child: _clockPanels[_panelIndex]
             ),
+            Padding(
+              padding: EdgeInsets.only(bottom: 15),
+              child: IconButton(
+                icon: Icon(
+                  Icons.swap_horiz,
+                ),
+                onPressed: _switchClockPanel,
+              ),
+            )
           ],
         ),
       ),
@@ -89,6 +102,12 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  void _switchClockPanel() {
+    setState(() {
+      _panelIndex = (_panelIndex + 1) % _clockPanels.length;
+    });
+  }
+
   void _openTimezonePage() async {
     String res = await Navigator.push(context, MaterialPageRoute(
         builder: (context) {
@@ -101,7 +120,7 @@ class _HomePageState extends State<HomePage> {
     }
 
     setState(() {
-      _utcOffset = res;
+      _clockState.utcOffset = res;
     });
   }
 

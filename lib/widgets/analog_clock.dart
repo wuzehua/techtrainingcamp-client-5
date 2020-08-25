@@ -1,17 +1,22 @@
 import 'dart:async';
+import 'package:clock_challenge/model/clock_state.dart';
 import 'package:clock_challenge/painter/analog_clock_bg_painter.dart';
+import 'package:clock_challenge/utils/datetime_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:clock_challenge/painter/analog_clock_painter.dart';
 
 class AnalogClock extends StatefulWidget {
   final DateTime datetime;
   final bool isLive;
+  final ClockState clockState;
 
   const AnalogClock(
+      this.clockState,
       {this.datetime,
         isLive,
         Key key})
       : this.isLive = isLive ?? (datetime == null),
+        assert(clockState != null),
         super(key: key);
 
   @override
@@ -34,8 +39,12 @@ class _AnalogClockState extends State<AnalogClock> {
 
   update(Timer timer) {
     if (mounted) {
+      String utcOffset = '+08:00';
+      if (widget.clockState != null) {
+        utcOffset = widget.clockState.utcOffset;
+      }
       // update is only called on live clocks. So, it's safe to update datetime.
-      datetime = DateTime.now();
+      datetime = transDateTime(DateTime.now().toUtc(), utcOffset);
       setState(() {});
     }
   }

@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:math';
+import 'package:clock_challenge/model/clock_state.dart';
 import 'package:clock_challenge/model/ring_state.dart';
 import 'package:clock_challenge/painter/ring_painter.dart';
 import 'package:clock_challenge/utils/datetime_utils.dart';
@@ -8,9 +9,11 @@ import 'package:flutter/rendering.dart';
 
 class RingClockPanel extends StatefulWidget {
 
-  final String utcOffset;
+  final ClockState clockState;
 
-  RingClockPanel(this.utcOffset, {Key key}): super(key: key);
+  RingClockPanel(this.clockState, {Key key}):
+        assert(clockState != null),
+        super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -79,11 +82,21 @@ class _RingClockPanelState extends State<RingClockPanel> {
   }
 
   _RingClockPanelState(): super() {
-
     _ringState = RingState();
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
     const Duration duration = Duration(seconds: 1);
     _timer = Timer.periodic(duration, (timer) {
-      DateTime res = transDateTime(DateTime.now().toUtc(), widget.utcOffset);
+
+      if (!mounted) {
+        return;
+      }
+
+      DateTime res = transDateTime(DateTime.now().toUtc(), widget.clockState.utcOffset);
 
       setState(() {
         _time = res;
@@ -91,13 +104,12 @@ class _RingClockPanelState extends State<RingClockPanel> {
       });
 
     });
-
-
   }
 
   @override
   Widget build(BuildContext context) {
     ThemeData themeData = Theme.of(context);
+    Orientation orientation = MediaQuery.of(context).orientation;
     final size = MediaQuery.of(context).size;
     _width = size.width;
     _height = size.height;
@@ -139,7 +151,8 @@ class _RingClockPanelState extends State<RingClockPanel> {
                     children: <Widget>[
                       Text(dateStr,
                         style: TextStyle(
-                          fontSize: 20,
+                          fontSize: orientation == Orientation.portrait ?
+                          20 : 15,
                         ),
                       ),
                       Transform(
@@ -156,7 +169,8 @@ class _RingClockPanelState extends State<RingClockPanel> {
                           children: <Widget>[
                             Text(timeStr,
                               style: TextStyle(
-                                fontSize: 50,
+                                fontSize: orientation == Orientation.portrait ?
+                                              50 : 30,
                                 fontWeight: FontWeight.bold
                               ),
                             ),
@@ -167,7 +181,7 @@ class _RingClockPanelState extends State<RingClockPanel> {
                           .toList(),
                         ),
                       ),
-                    Text('GMT${widget.utcOffset}')
+                    Text('GMT${widget.clockState.utcOffset}')
                     ],
                   )
                 ),

@@ -11,7 +11,7 @@ class AnalogClockPage extends StatelessWidget {
         title: '模拟表盘',
       ),
       body: Center(
-        child: AnalogClock(),
+//        child: AnalogClock(),
       ),
     );
   }

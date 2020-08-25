@@ -1,0 +1,3 @@
+class ClockState {
+  String utcOffset;
+}
