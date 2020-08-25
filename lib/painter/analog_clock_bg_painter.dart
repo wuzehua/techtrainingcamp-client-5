@@ -2,25 +2,26 @@ import 'package:flutter/material.dart';
 import 'dart:math';
 
 class AnalogClockBgPainter extends CustomPainter{
-  final String bgColor;
   final int circleNum;
   final Color borderColor;
   final Color flowerColor;
   final Color indicatorColor;
   final Color numberColor;
-  AnalogClockBgPainter({this.bgColor, this.circleNum: 6, this.borderColor: Colors.lightBlueAccent,
-  this.flowerColor: Colors.white, this.indicatorColor: Colors.lightBlueAccent, this.numberColor: Colors.white});
+  AnalogClockBgPainter({this.circleNum: 6, this.borderColor: Colors.grey,
+  this.flowerColor: Colors.white, this.indicatorColor: Colors.grey, this.numberColor: Colors.black});
+  static const int BASE_SIZE = 375;
 
   @override
   void paint(Canvas canvas, Size size) {
+    double scaleFactor = size.shortestSide / BASE_SIZE;
     Gradient gradient = RadialGradient(
-      radius: 0.6,
+      radius: 0.25,
       colors: [
-        Colors.blue,
         Colors.black,
+        Colors.white,
       ],
     );
-    double outerRadius = size.width/2-2;
+    double outerRadius = size.width/2*0.95;
     Rect rect = Rect.fromCircle(center: size.center(Offset.zero), radius: outerRadius);
     Paint painter = Paint()
       ..color = Colors.black
@@ -28,13 +29,14 @@ class AnalogClockBgPainter extends CustomPainter{
       ..style = PaintingStyle.fill
       ..shader = gradient.createShader(rect);
     canvas.drawCircle(size.center(Offset.zero), outerRadius, painter);
-    double midRadius = size.width/2*0.7;
+    double midRadius = size.width/2*0.65;
     _paintFlower(canvas, size);
-    _paintBorder(canvas, size, midRadius);
-    _paintIndicator(canvas, size, midRadius);
-    _paintIndicator(canvas, size, outerRadius, outer: false);
-    _paintNum(canvas, size, midRadius, startNum: 12, fontSize: 22);
-    _paintNum(canvas, size, outerRadius, fontSize: 26);
+    _paintBorder(canvas, size, midRadius, scaleFactor);
+//    _paintBorder(canvas, size, outerRadius);
+    _paintIndicator(canvas, size, midRadius, scaleFactor);
+    _paintIndicator(canvas, size, outerRadius, scaleFactor, outer: false);
+    _paintNum(canvas, size, midRadius, scaleFactor, startNum: 12, fontSize: 22*scaleFactor);
+    _paintNum(canvas, size, outerRadius, scaleFactor, fontSize: 25*scaleFactor);
   }
 
   void _paintFlower(Canvas canvas, Size size){
@@ -55,16 +57,16 @@ class AnalogClockBgPainter extends CustomPainter{
     canvas.restore();
   }
 
-  void _paintBorder(Canvas canvas, Size size, double radius){
+  void _paintBorder(Canvas canvas, Size size, double radius, double scaleFactor){
     Paint borderPaint = Paint()
       ..color = borderColor
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 2;
+      ..strokeWidth = 2*scaleFactor;
     canvas.drawCircle(
         size.center(Offset.zero), radius, borderPaint);
   }
 
-  void _paintIndicator(Canvas canvas, Size size, double radius, {bool outer: true}){
+  void _paintIndicator(Canvas canvas, Size size, double radius, double scaleFactor, {bool outer: true}){
     canvas.save();
     double width = size.width;
     double height = size.height;
@@ -75,20 +77,26 @@ class AnalogClockBgPainter extends CustomPainter{
       ..color = indicatorColor
       ..isAntiAlias = true
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 2;
+      ..strokeWidth = 2*scaleFactor;
     if (outer==false)
-      painter1.strokeWidth = 3;
+      painter1.strokeWidth = 3*scaleFactor;
     for(int i = 0;i < num;++i) {
-      if (outer)
-        canvas.drawLine(Offset(0, radius * 1.05), Offset(0, radius), painter1);
+      if (i%5==0)
+        if (outer)
+          canvas.drawLine(Offset(0, radius * 1.07), Offset(0, radius), painter1);
+        else
+          canvas.drawLine(Offset(0, radius * 0.92), Offset(0, radius*1.03), painter1);
       else
-        canvas.drawLine(Offset(0, radius * 0.97), Offset(0, radius), painter1);
+        if (outer)
+          canvas.drawLine(Offset(0, radius * 1.05), Offset(0, radius), painter1);
+        else
+          canvas.drawLine(Offset(0, radius * 0.95), Offset(0, radius), painter1);
       canvas.rotate(deltaDeg);
     }
     canvas.restore();
   }
 
-  void _paintNum(Canvas canvas, Size size, double radius, {int startNum: 0, double fontSize: 14}) {
+  void _paintNum(Canvas canvas, Size size, double radius, double scaleFactor, {int startNum: 0, double fontSize: 14}) {
     final textPainter = TextPainter(textDirection: TextDirection.ltr);
     canvas.save();
     double width = size.width;
@@ -98,7 +106,10 @@ class AnalogClockBgPainter extends CustomPainter{
     for (int i = 0; i < 12; i++) {
         //draw number
         canvas.save();
-        canvas.translate(0.0, -radius + fontSize);
+        if (startNum==0)
+          canvas.translate(0.0, -radius + fontSize + 5*scaleFactor);
+        else
+          canvas.translate(0.0, -radius + fontSize);
         textPainter.text = new TextSpan(
           text: "${i == 0 ? (12+startNum).toString() : i+startNum}",
           style: TextStyle(
@@ -121,7 +132,7 @@ class AnalogClockBgPainter extends CustomPainter{
 
   @override
   bool shouldRepaint(AnalogClockBgPainter oldDelegate) {
-    return oldDelegate.bgColor==bgColor ?? true;
+    return true;
   }
 
 }

@@ -20,7 +20,7 @@ class AnalogClockPainter extends CustomPainter {
         this.showSecondHand = true,
         this.hourHandColor = Colors.black,
         this.minuteHandColor = Colors.black,
-        this.secondHandColor = Colors.grey,
+        this.secondHandColor = Colors.red,
         });
 
   @override
@@ -45,11 +45,11 @@ class AnalogClockPainter extends CustomPainter {
     int seconds = datetime.second ;
     double minutes = (datetime.minute + seconds/ SECONDS_IN_MINUTE);
     double hour = (datetime.hour + minutes / MINUTES_IN_HOUR);
-    List<double> pathX=[-6, 6, 2, 3, 0.5, -0.5, -3, -2], pathY = [30, 30, 10, -50, -170, -170, -50, 10];
+    List<double> pathX=[-6, 6, 2, 3, 0.5, -0.5, -3, -2], pathY = [30, 30, 10, -50, -160, -160, -50, 10];
     _paintHand(canvas, size, 2*pi/60*seconds, secondHandColor, pathX, pathY);
-    pathX=[-2.5, 2.5, 6, 0.5, -0.5, -6]; pathY = [0, 0, -70, -140, -140, -70];
+    pathX=[-2.5, 2.5, 6, 0.5, -0.5, -6]; pathY = [0, 0, -60, -130, -130, -60];
     _paintHand(canvas, size, 2*pi/60*minutes, minuteHandColor, pathX, pathY);
-    pathX=[-2, 2, 2, 8, 0.5, -0.5, -8, -2]; pathY = [0, 0, -70, -75, -90, -90, -75,  -70];
+    pathX=[-2, 2, 2, 8, 0.5, -0.5, -8, -2]; pathY = [0, 0, -60, -65, -80, -80, -65,  -60];
     _paintHand(canvas, size, 2*pi/12*hour, hourHandColor, pathX, pathY);
   }
 
