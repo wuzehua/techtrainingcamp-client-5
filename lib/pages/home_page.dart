@@ -36,12 +36,6 @@ class _HomePageState extends State<HomePage> {
               onPressed: _openCountDownPage,
             ),
             IconButton(
-              icon: Icon(Icons.alarm,
-                color: themeData.accentColor,
-              ),
-              onPressed: _openAlarmPage,
-            ),
-            IconButton(
               icon: Icon(Icons.title,
                 color: themeData.accentColor,
               ),

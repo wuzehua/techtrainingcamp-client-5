@@ -4,11 +4,19 @@ class ParallaxButton extends StatefulWidget {
 
   final String text;
   final GestureTapCallback onTap;
+  final Size backgroundSize;
+  final Color backgroundColor;
+  final TextStyle textStyle;
+  final double cornerRadius;
 
   ParallaxButton({
     Key key,
     this.text = '',
-    this.onTap
+    this.onTap,
+    this.backgroundSize = Size.zero,
+    this.backgroundColor = Colors.transparent,
+    this.textStyle,
+    this.cornerRadius = 10
   }): super(key: key);
 
 
@@ -28,9 +36,8 @@ class _ParallaxButtonState extends State<ParallaxButton> {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
-    _width = size.width;
-    _height = size.height;
+    _width = widget.backgroundSize.width;
+    _height = widget.backgroundSize.height;
     double xRatio = _currX / _width;
     double yRatio = _currY / _height;
 
@@ -46,11 +53,27 @@ class _ParallaxButtonState extends State<ParallaxButton> {
             onPanDown: (details) => setState(() => _panning = true),
             onPanUpdate: _updatePanningPosition,
             onPanEnd: (details) => setState(() => _panning = false),
-            child: Stack(
-              children: <Widget>[
-                Container(),
-                Text(widget.text)
-              ],
+            child: Container(
+              width: widget.backgroundSize.width,
+              height: widget.backgroundSize.height,
+              child: Transform(
+                transform: Matrix4.identity()
+                  ..translate(
+                      _panning ? (8 * xRatio * 2 - 8) : 0.0,
+                      _panning ? (8 * yRatio * 2 - 8) : 0.0,
+                      0.0),
+                alignment: FractionalOffset.center,
+                child: Center(
+                    child: Text(
+                      widget.text,
+                      style: widget.textStyle,
+                    )
+                ),
+              ),
+              decoration: BoxDecoration(
+                color: widget.backgroundColor,
+                borderRadius: BorderRadius.circular(widget.cornerRadius)
+              ),
             )
         )
     );
@@ -61,12 +84,21 @@ class _ParallaxButtonState extends State<ParallaxButton> {
     double x = details.localPosition.dx;
     double y = details.localPosition.dy;
 
-    if (x > 0 && x < _width && y > 0 && y < _height) {
-      setState(() {
-        _currX = x;
-        _currY = y;
-      });
+    double newX = _currX;
+    double newY = _currY;
+
+    if (x > 0 && x < _width) {
+      newX = x;
     }
+
+    if (y > 0 && y < _height) {
+      newY = y;
+    }
+
+    setState(() {
+      _currX = newX;
+      _currY = newY;
+    });
 
   }
 }

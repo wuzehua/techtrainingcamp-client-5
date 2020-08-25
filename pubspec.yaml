@@ -59,6 +59,71 @@ flutter:
   # the material Icons class.
   uses-material-design: true
 
+  assets:
+  # assets-generator-begin
+    - assets/weather_icons/100.png
+    - assets/weather_icons/101.png
+    - assets/weather_icons/102.png
+    - assets/weather_icons/103.png
+    - assets/weather_icons/104.png
+    - assets/weather_icons/150.png
+    - assets/weather_icons/153.png
+    - assets/weather_icons/154.png
+    - assets/weather_icons/300.png
+    - assets/weather_icons/301.png
+    - assets/weather_icons/302.png
+    - assets/weather_icons/303.png
+    - assets/weather_icons/304.png
+    - assets/weather_icons/305.png
+    - assets/weather_icons/306.png
+    - assets/weather_icons/307.png
+    - assets/weather_icons/308.png
+    - assets/weather_icons/309.png
+    - assets/weather_icons/310.png
+    - assets/weather_icons/311.png
+    - assets/weather_icons/312.png
+    - assets/weather_icons/313.png
+    - assets/weather_icons/314.png
+    - assets/weather_icons/315.png
+    - assets/weather_icons/316.png
+    - assets/weather_icons/317.png
+    - assets/weather_icons/318.png
+    - assets/weather_icons/350.png
+    - assets/weather_icons/351.png
+    - assets/weather_icons/399.png
+    - assets/weather_icons/400.png
+    - assets/weather_icons/401.png
+    - assets/weather_icons/402.png
+    - assets/weather_icons/403.png
+    - assets/weather_icons/404.png
+    - assets/weather_icons/405.png
+    - assets/weather_icons/406.png
+    - assets/weather_icons/407.png
+    - assets/weather_icons/408.png
+    - assets/weather_icons/409.png
+    - assets/weather_icons/410.png
+    - assets/weather_icons/456.png
+    - assets/weather_icons/457.png
+    - assets/weather_icons/499.png
+    - assets/weather_icons/500.png
+    - assets/weather_icons/501.png
+    - assets/weather_icons/502.png
+    - assets/weather_icons/503.png
+    - assets/weather_icons/504.png
+    - assets/weather_icons/507.png
+    - assets/weather_icons/508.png
+    - assets/weather_icons/509.png
+    - assets/weather_icons/510.png
+    - assets/weather_icons/511.png
+    - assets/weather_icons/512.png
+    - assets/weather_icons/513.png
+    - assets/weather_icons/514.png
+    - assets/weather_icons/515.png
+    - assets/weather_icons/900.png
+    - assets/weather_icons/901.png
+    - assets/weather_icons/999.png
+  # assets-generator-end
+
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg

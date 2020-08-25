@@ -190,12 +190,21 @@ class _RingClockPanelState extends State<RingClockPanel> {
     double x = details.localPosition.dx;
     double y = details.localPosition.dy;
 
-    if (x > 0 && x < _width && y > 0 && y < _height) {
-      setState(() {
-        _currX = x;
-        _currY = y;
-      });
+    double newX = _currX;
+    double newY = _currY;
+
+    if (x > 0 && x < _width) {
+      newX = x;
     }
+
+    if (y > 0 && y < _height) {
+      newY = y;
+    }
+
+    setState(() {
+      _currX = newX;
+      _currY = newY;
+    });
 
   }
 

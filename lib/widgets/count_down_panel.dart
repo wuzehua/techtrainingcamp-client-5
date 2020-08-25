@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:clock_challenge/widgets/parallex_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cupertino_date_picker/flutter_cupertino_date_picker.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
@@ -53,42 +54,75 @@ class _CountDownPanelState extends State<CountDownPanel> {
   Widget build(BuildContext context) {
     ThemeData themeData = Theme.of(context);
 
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        FlatButton(
-          child: Text(
-            time,
-            style: TextStyle(
-                fontSize: 30,
-                color: themeData.accentColor,
-                fontWeight: FontWeight.bold),
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 20, top: 20),
+      child: Column(
+
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          FlatButton(
+            child: Text(
+              time,
+              style: TextStyle(
+                  fontSize: 50,
+                  color: themeData.accentColor,
+                  fontWeight: FontWeight.bold),
+            ),
+            onPressed: () {
+              _popTimePicker();
+            },
           ),
-          onPressed: () {
-            _popTimePicker();
-          },
-        ),
-        Spacer(),
-        !_isCountingDown
-            ? FlatButton(
-          child: Text('开始'),
-          onPressed: _startCountingDown,
-        )
-            : null,
-        _isCountingDown && !_isFinished
-            ? FlatButton(
-          child: Text(pauseButtonText),
-          onPressed: _pauseOrResumeCountingDown,
-        )
-            : null,
-        _isCountingDown
-            ? FlatButton(
-          child: Text('停止'),
-          onPressed: _stopCountingDown,
-        )
-            : null
-      ].where((element) => element != null)
-          .toList(),
+          Spacer(),
+          !_isCountingDown
+          ? ParallaxButton(
+            text: '开始',
+            onTap: _startCountingDown,
+            backgroundSize: Size(200, 50),
+            backgroundColor: Colors.green.withOpacity(0.3),
+            textStyle: TextStyle(
+              color: Colors.green,
+              fontWeight: FontWeight.bold,
+              fontSize: 18
+            ),
+          )
+//            ? FlatButton(
+//          child: Text('开始'),
+//          onPressed: _startCountingDown,
+//        )
+              : null,
+          _isCountingDown && !_isFinished
+              ?
+          Padding(
+            padding: EdgeInsets.only(bottom: 20),
+          child: ParallaxButton(
+            text: pauseButtonText,
+            onTap: _pauseOrResumeCountingDown,
+            backgroundSize: Size(200, 50),
+            backgroundColor: Colors.blue.withOpacity(0.3),
+            textStyle: TextStyle(
+                color: Colors.blue,
+                fontWeight: FontWeight.bold,
+                fontSize: 18
+            ),
+          )
+          )
+              : null,
+          _isCountingDown
+              ? ParallaxButton(
+            text: '停止',
+            onTap: _stopCountingDown,
+            backgroundSize: Size(200, 50),
+            backgroundColor: Colors.red.withOpacity(0.3),
+            textStyle: TextStyle(
+                color: Colors.red,
+                fontWeight: FontWeight.bold,
+                fontSize: 18
+            ),
+          )
+              : null
+        ].where((element) => element != null)
+            .toList(),
+      ),
     );
   }
 
