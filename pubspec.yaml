@@ -44,6 +44,9 @@ dependencies:
   #震动反馈
   flutter_vibrate: ^1.0.0
 
+  #数据持久化
+  shared_preferences: ^0.5.10
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -21,8 +21,6 @@ class _TimezoneSearchState extends State<TimezoneSearchPanel> {
   @override
   Widget build(BuildContext context) {
 
-    ThemeData themeData = Theme.of(context);
-
     return Center(
       child: Column(
         children: [
@@ -65,7 +63,7 @@ class _TimezoneSearchState extends State<TimezoneSearchPanel> {
                     return LocationListItem(_response.location[index],
                       onPressed: (){
                         Navigator.pop(context,
-                            _response.location[index].utcOffset);
+                            _response.location[index]);
                       },
                     );
                   }
