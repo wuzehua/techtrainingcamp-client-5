@@ -21,7 +21,7 @@ class AnalogClockBgPainter extends CustomPainter{
         Colors.white,
       ],
     );
-    double outerRadius = size.width/2*0.95;
+    double outerRadius = size.shortestSide/2*0.95;
     Rect rect = Rect.fromCircle(center: size.center(Offset.zero), radius: outerRadius);
     Paint painter = Paint()
       ..color = Colors.black
@@ -29,7 +29,7 @@ class AnalogClockBgPainter extends CustomPainter{
       ..style = PaintingStyle.fill
       ..shader = gradient.createShader(rect);
     canvas.drawCircle(size.center(Offset.zero), outerRadius, painter);
-    double midRadius = size.width/2*0.65;
+    double midRadius = size.shortestSide/2*0.65;
     _paintFlower(canvas, size);
     _paintBorder(canvas, size, midRadius, scaleFactor);
 //    _paintBorder(canvas, size, outerRadius);
@@ -132,7 +132,8 @@ class AnalogClockBgPainter extends CustomPainter{
 
   @override
   bool shouldRepaint(AnalogClockBgPainter oldDelegate) {
-    return true;
+    return oldDelegate.numberColor != numberColor || oldDelegate.indicatorColor != indicatorColor ||
+    oldDelegate.borderColor != borderColor || oldDelegate.flowerColor != flowerColor || oldDelegate.circleNum != circleNum;
   }
 
 }
