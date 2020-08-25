@@ -1,5 +1,7 @@
 import 'package:clock_challenge/model/clock_state.dart';
 import 'package:clock_challenge/model/location_response_entity.dart';
+import 'package:clock_challenge/model/weather_entity.dart';
+import 'package:clock_challenge/network/http_service.dart';
 import 'package:clock_challenge/pages/alarm_page.dart';
 import 'package:clock_challenge/pages/count_down_page.dart';
 import 'package:clock_challenge/pages/timezone_page.dart';
@@ -24,6 +26,8 @@ class _HomePageState extends State<HomePage> {
   List<Widget> _clockPanels;
   SharedPreferences _sharedPreferences;
   String _locationId = '101280101';
+  String _weatherIcon = '999';
+  String _cityName = '广州';
 
   String get utcOffsetKey {
     return 'utcOffset';
@@ -32,7 +36,11 @@ class _HomePageState extends State<HomePage> {
   String get locationIdKey {
     return 'locationId';
   }
-  
+
+  String get cityNameKey {
+    return 'cityName';
+  }
+
   _HomePageState(): super() {
     _clockState = ClockState();
     _clockState.utcOffset = '+08:00';
@@ -43,7 +51,9 @@ class _HomePageState extends State<HomePage> {
       _sharedPreferences = sharedPre;
       _clockState.utcOffset = _sharedPreferences.getString(utcOffsetKey) ?? '+08:00';
       _locationId = _sharedPreferences.getString(locationIdKey) ?? '101280101';
+      _cityName = _sharedPreferences.getString(cityNameKey) ?? '广州';
 
+      _fetchWeather();
       setState(() {});
     });
   }
@@ -85,12 +95,22 @@ class _HomePageState extends State<HomePage> {
                 child: _clockPanels[_panelIndex]
             ),
             Padding(
-              padding: EdgeInsets.only(bottom: 15),
-              child: IconButton(
-                icon: Icon(
-                  Icons.swap_horiz,
-                ),
-                onPressed: _switchClockPanel,
+              padding: EdgeInsets.only(bottom: 15, left: 20, right: 20),
+              child: Row(
+                children: <Widget>[
+                  IconButton(
+                    icon: Icon(
+                      Icons.swap_horiz,
+                    ),
+                    onPressed: _switchClockPanel,
+                  ),
+                  Spacer(),
+                  Text(_cityName),
+                  Spacer(),
+                  Image.asset('assets/weather_icons/$_weatherIcon.png',
+                  width: 50,
+                  height: 50,)
+                ],
               ),
             )
           ],
@@ -143,11 +163,23 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       _clockState.utcOffset = res.utcOffset;
       _locationId = res.id;
+      _cityName = res.name;
     });
 
     _sharedPreferences.setString(utcOffsetKey, res.utcOffset);
     _sharedPreferences.setString(locationIdKey, res.id);
+    _sharedPreferences.setString(cityNameKey, _cityName);
 
+    _fetchWeather();
+
+  }
+
+  void _fetchWeather() async {
+    WeatherResponse weatherResponse = await HttpService.getService()
+                  .getWeatherNow(_locationId);
+    setState(() {
+      _weatherIcon = weatherResponse.now.icon;
+    });
   }
 
 }
