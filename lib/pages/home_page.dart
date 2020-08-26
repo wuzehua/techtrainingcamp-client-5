@@ -104,7 +104,7 @@ class _HomePageState extends State<HomePage> {
                     onPressed: _switchClockPanel,
                   ),
                   Spacer(),
-                  TextButton(
+                  FlatButton(
                     child: Text(
                       _cityName,
                       style:
