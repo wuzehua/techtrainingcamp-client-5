@@ -1,6 +1,7 @@
-import 'package:clock_challenge/model/weather_entity.dart';
+import 'package:clock_challenge/model/weather_hourly_response_entity.dart';
 
-weatherResponseFromJson(WeatherResponse data, Map<String, dynamic> json) {
+WeatherHourlyResponseFromJson(
+    WeatherHourlyResponse data, Map<String, dynamic> json) {
   if (json['code'] != null) {
     data.code = json['code']?.toString();
   }
@@ -10,22 +11,25 @@ weatherResponseFromJson(WeatherResponse data, Map<String, dynamic> json) {
   if (json['fxLink'] != null) {
     data.fxLink = json['fxLink']?.toString();
   }
-  if (json['now'] != null) {
-    data.now = new WeatherNow().fromJson(json['now']);
+  if (json['hourly'] != null) {
+    data.hourly = new List<WeatherHourly>();
+    (json['hourly'] as List).forEach((v) {
+      data.hourly.add(new WeatherHourly().fromJson(v));
+    });
   }
   if (json['refer'] != null) {
-    data.refer = new WeatherRefer().fromJson(json['refer']);
+    data.refer = new WeatherHourlyResponseRefer().fromJson(json['refer']);
   }
   return data;
 }
 
-Map<String, dynamic> weatherResponseToJson(WeatherResponse entity) {
+Map<String, dynamic> WeatherHourlyResponseToJson(WeatherHourlyResponse entity) {
   final Map<String, dynamic> data = new Map<String, dynamic>();
   data['code'] = entity.code;
   data['updateTime'] = entity.updateTime;
   data['fxLink'] = entity.fxLink;
-  if (entity.now != null) {
-    data['now'] = entity.now.toJson();
+  if (entity.hourly != null) {
+    data['hourly'] = entity.hourly.map((v) => v.toJson()).toList();
   }
   if (entity.refer != null) {
     data['refer'] = entity.refer.toJson();
@@ -33,15 +37,12 @@ Map<String, dynamic> weatherResponseToJson(WeatherResponse entity) {
   return data;
 }
 
-weatherNowFromJson(WeatherNow data, Map<String, dynamic> json) {
-  if (json['obsTime'] != null) {
-    data.obsTime = json['obsTime']?.toString();
+WeatherHourlyFromJson(WeatherHourly data, Map<String, dynamic> json) {
+  if (json['fxDate'] != null) {
+    data.fxDate = json['fxDate']?.toString();
   }
   if (json['temp'] != null) {
     data.temp = json['temp']?.toString();
-  }
-  if (json['feelsLike'] != null) {
-    data.feelsLike = json['feelsLike']?.toString();
   }
   if (json['icon'] != null) {
     data.icon = json['icon']?.toString();
@@ -64,14 +65,14 @@ weatherNowFromJson(WeatherNow data, Map<String, dynamic> json) {
   if (json['humidity'] != null) {
     data.humidity = json['humidity']?.toString();
   }
+  if (json['pop'] != null) {
+    data.pop = json['pop']?.toString();
+  }
   if (json['precip'] != null) {
     data.precip = json['precip']?.toString();
   }
   if (json['pressure'] != null) {
     data.pressure = json['pressure']?.toString();
-  }
-  if (json['vis'] != null) {
-    data.vis = json['vis']?.toString();
   }
   if (json['cloud'] != null) {
     data.cloud = json['cloud']?.toString();
@@ -79,14 +80,19 @@ weatherNowFromJson(WeatherNow data, Map<String, dynamic> json) {
   if (json['dew'] != null) {
     data.dew = json['dew']?.toString();
   }
+  if (json['snow'] != null) {
+    data.snow = json['snow']?.toString();
+  }
+  if (json['ice'] != null) {
+    data.ice = json['ice']?.toString();
+  }
   return data;
 }
 
-Map<String, dynamic> weatherNowToJson(WeatherNow entity) {
+Map<String, dynamic> WeatherHourlyToJson(WeatherHourly entity) {
   final Map<String, dynamic> data = new Map<String, dynamic>();
-  data['obsTime'] = entity.obsTime;
+  data['fxDate'] = entity.fxDate;
   data['temp'] = entity.temp;
-  data['feelsLike'] = entity.feelsLike;
   data['icon'] = entity.icon;
   data['text'] = entity.text;
   data['wind360'] = entity.wind360;
@@ -94,15 +100,18 @@ Map<String, dynamic> weatherNowToJson(WeatherNow entity) {
   data['windScale'] = entity.windScale;
   data['windSpeed'] = entity.windSpeed;
   data['humidity'] = entity.humidity;
+  data['pop'] = entity.pop;
   data['precip'] = entity.precip;
   data['pressure'] = entity.pressure;
-  data['vis'] = entity.vis;
   data['cloud'] = entity.cloud;
   data['dew'] = entity.dew;
+  data['snow'] = entity.snow;
+  data['ice'] = entity.ice;
   return data;
 }
 
-weatherReferFromJson(WeatherRefer data, Map<String, dynamic> json) {
+weatherHourlyResponseReferFromJson(
+    WeatherHourlyResponseRefer data, Map<String, dynamic> json) {
   if (json['sources'] != null) {
     data.sources =
         json['sources']?.map((v) => v?.toString())?.toList()?.cast<String>();
@@ -114,7 +123,8 @@ weatherReferFromJson(WeatherRefer data, Map<String, dynamic> json) {
   return data;
 }
 
-Map<String, dynamic> weatherReferToJson(WeatherRefer entity) {
+Map<String, dynamic> weatherHourlyResponseReferToJson(
+    WeatherHourlyResponseRefer entity) {
   final Map<String, dynamic> data = new Map<String, dynamic>();
   data['sources'] = entity.sources;
   data['license'] = entity.license;

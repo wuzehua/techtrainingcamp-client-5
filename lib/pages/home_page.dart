@@ -5,22 +5,22 @@ import 'package:clock_challenge/network/http_service.dart';
 import 'package:clock_challenge/pages/alarm_page.dart';
 import 'package:clock_challenge/pages/count_down_page.dart';
 import 'package:clock_challenge/pages/timezone_page.dart';
+import 'package:clock_challenge/pages/weather_page.dart';
 import 'package:clock_challenge/widgets/analog_clock.dart';
 import 'package:clock_challenge/widgets/ring_clock_panel.dart';
 import 'package:flutter/material.dart';
 import 'package:clock_challenge/pages/analog_clock_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
-
 
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-
   ClockState _clockState;
   int _panelIndex = 0;
   List<Widget> _clockPanels;
@@ -41,15 +41,15 @@ class _HomePageState extends State<HomePage> {
     return 'cityName';
   }
 
-  _HomePageState(): super() {
+  _HomePageState() : super() {
     _clockState = ClockState();
     _clockState.utcOffset = '+08:00';
     _clockPanels = [RingClockPanel(_clockState), AnalogClock(_clockState)];
 
-    SharedPreferences.getInstance()
-        .then((sharedPre) {
+    SharedPreferences.getInstance().then((sharedPre) {
       _sharedPreferences = sharedPre;
-      _clockState.utcOffset = _sharedPreferences.getString(utcOffsetKey) ?? '+08:00';
+      _clockState.utcOffset =
+          _sharedPreferences.getString(utcOffsetKey) ?? '+08:00';
       _locationId = _sharedPreferences.getString(locationIdKey) ?? '101280101';
       _cityName = _sharedPreferences.getString(cityNameKey) ?? '广州';
 
@@ -60,7 +60,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-
     ThemeData themeData = Theme.of(context);
 
     return Scaffold(
@@ -72,13 +71,15 @@ class _HomePageState extends State<HomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             IconButton(
-              icon: Icon(Icons.access_time,
+              icon: Icon(
+                Icons.access_time,
                 color: themeData.accentColor,
               ),
               onPressed: _openCountDownPage,
             ),
             IconButton(
-              icon: Icon(Icons.title,
+              icon: Icon(
+                Icons.title,
                 color: themeData.accentColor,
               ),
               onPressed: _openTimezonePage,
@@ -91,9 +92,7 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Expanded(
-                child: _clockPanels[_panelIndex]
-            ),
+            Expanded(child: _clockPanels[_panelIndex]),
             Padding(
               padding: EdgeInsets.only(bottom: 15, left: 20, right: 20),
               child: Row(
@@ -105,11 +104,22 @@ class _HomePageState extends State<HomePage> {
                     onPressed: _switchClockPanel,
                   ),
                   Spacer(),
-                  Text(_cityName),
+                  TextButton(
+                    child: Text(
+                      _cityName,
+                      style:
+                          new TextStyle(color: Theme.of(context).accentColor),
+                    ),
+                    onPressed: _openWeatherPage,
+                  ),
                   Spacer(),
-                  Image.asset('assets/weather_icons/$_weatherIcon.png',
-                  width: 50,
-                  height: 50,)
+                  IconButton(
+                      icon: Image.asset(
+                        'assets/weather_icons/$_weatherIcon.png',
+                        width: 50,
+                        height: 50,
+                      ),
+                      onPressed: _reFetchWeather)
                 ],
               ),
             )
@@ -120,27 +130,27 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _openCountDownPage() {
-    Navigator.push(context, MaterialPageRoute(
-        builder: (context) {
-          return CountDownPage();
-        })
-    );
+    Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return CountDownPage();
+    }));
   }
 
   void _openAlarmPage() {
-    Navigator.push(context, MaterialPageRoute(
-        builder: (context) {
-        return AlarmPage();
-      })
-    );
+    Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return AlarmPage();
+    }));
   }
 
   void _openAnalogClockPage() {
-    Navigator.push(context, MaterialPageRoute(
-        builder: (context) {
-          return AnalogClockPage();
-        })
-    );
+    Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return AnalogClockPage();
+    }));
+  }
+
+  void _openWeatherPage() {
+    Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return WeatherPage();
+    }));
   }
 
   void _switchClockPanel() {
@@ -150,11 +160,10 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _openTimezonePage() async {
-    Location res = await Navigator.push(context, MaterialPageRoute(
-        builder: (context) {
-          return TimezonePage();
-        })
-    );
+    Location res =
+        await Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return TimezonePage();
+    }));
 
     if (res == null) {
       return;
@@ -171,15 +180,25 @@ class _HomePageState extends State<HomePage> {
     _sharedPreferences.setString(cityNameKey, _cityName);
 
     _fetchWeather();
-
   }
 
   void _fetchWeather() async {
-    WeatherResponse weatherResponse = await HttpService.getService()
-                  .getWeatherNow(_locationId);
+    WeatherResponse weatherResponse =
+        await HttpService.getService().getWeatherNow(_locationId);
     setState(() {
       _weatherIcon = weatherResponse.now.icon;
     });
   }
 
+  void _reFetchWeather() async {
+    _fetchWeather();
+    Fluttertoast.showToast(
+        msg: "天气更新成功",
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIos: 1,
+        backgroundColor: Color(0xFFF5F5F5),
+        textColor: Color(0xFFA9A9A9),
+        fontSize: 16.0);
+  }
 }
